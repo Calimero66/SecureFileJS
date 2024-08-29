@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Browser Based File Encryption / Decryption</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark text-white">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="display-4">File Encryption / Decryption</h1>
+                <h4 class="lead">Encrypt and decrypt files using your web browser</h4>
+            </div>
+            <div>
+                <button id="btnRefresh" class="btn btn-secondary">Refresh Page</button>
+                <button id="btnDivEncrypt" class="btn btn-primary">Encrypt a File</button>
+                <button id="btnDivDecrypt" class="btn btn-primary">Decrypt a File</button>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div id="divEncryptfile">
+            <h2>Encrypt a File</h2>
+            <p>Enter a password and drop the file to be encrypted into the dropzone below. The file will be encrypted using the password.</p>
+
+            <div class="mt-4">
+                <div class="row mb-3">
+                    <label for="txtEncpassphrase" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input id="txtEncpassphrase" type="password" class="form-control" onkeyup="encvalidate();">
+                        <small class="form-text text-muted">Minimum length eight characters, make sure it is strong!</small>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="txtEncpassphraseretype" class="col-sm-2 col-form-label">Retype Password</label>
+                    <div class="col-sm-10">
+                        <input id="txtEncpassphraseretype" type="password" class="form-control" onkeyup="encvalidate();">
+                        <span id="spnCheckretype" class="text-success"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div id="encdropzone" class="dropzone text-center p-4 border border-secondary rounded" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" ondragend="dragend_handler(event);">
+                    <p>Drag and drop the file to be encrypted into this dropzone, or click <a onclick="encfileElem.click();" class="text-primary">here</a> to select a file.</p>
+                    <p><span id="spnencfilename"></span></p>
+                </div>
+                <input type="file" id="encfileElem" class="d-none" onchange="selectfile(this.files)">
+            </div>
+
+            <div class="mt-4 d-flex justify-content-center">
+                <button id="btnEncrypt" class="btn btn-success" onclick="encryptfile();" disabled>Encrypt File</button>
+                <span id="spnEncstatus" class="ms-3"></span>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a id="aEncsavefile" class="d-none"><button class="btn btn-primary">Save Encrypted File</button></a>
+            </div>
+        </div>
+
+        <div id="divDecryptfile" class="d-none">
+            <h2>Decrypt a File</h2>
+            <p>Enter the password used to encrypt the file, then drop the file to be decrypted into the dropzone below.</p>
+
+            <div class="mt-4">
+                <div class="row mb-3">
+                    <label for="txtDecpassphrase" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input id="txtDecpassphrase" type="password" class="form-control" onkeyup="decvalidate();">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div id="decdropzone" class="dropzone text-center p-4 border border-secondary rounded" ondrop="drop_handler(event);" ondragover="dragover_handler(event);" ondragend="dragend_handler(event);">
+                    <p>Drag and drop the file to be decrypted into this dropzone, or click <a onclick="decfileElem.click();" class="text-primary">here</a> to select a file.</p>
+                    <p><span id="spndecfilename"></span></p>
+                </div>
+                <input type="file" id="decfileElem" class="d-none" onchange="selectfile(this.files)">
+            </div>
+
+            <div class="mt-4 d-flex justify-content-center">
+                <button id="btnDecrypt" class="btn btn-success" onclick="decryptfile();" disabled>Decrypt File</button>
+                <span id="spnDecstatus" class="ms-3"></span>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a id="aDecsavefile" class="d-none"><button class="btn btn-primary">Save Decrypted File</button></a>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+}
+
+.dropzone {
+    cursor: pointer;
+}
+
+.form-text {
+    color: #6c757d !important;
+}
+
+.btn {
+    margin: 0.5rem;
+}
